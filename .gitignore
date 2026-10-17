@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# 这个仓库是从一台真实的开发机上整理出来的，所以下面**不是**一份「标准模板」，
+# 而是逐条对应「本机上确实存在、但绝不能进公开仓库」的东西。每条都有理由。
+# ─────────────────────────────────────────────────────────────────────────────
+
+# 构建产物：143 MB 的绿色包 + 原生 dll/exe，永远不该进版本库（用 Release 分发）
+dist/
+src/**/bin/
+src/**/obj/
+tools/**/bin/
+tools/**/obj/
+src/Btwu.CredProv/build/
+src/Btwu.CredProv/test/build/
+
+# 开发笔记与调查现场：含作者账号、机器名、SID，以及报障用户的机器名/用户名
+# （工程日志 docs/工程日志.md 也在这里 —— 那份记录了太多本机与第三方信息）
+.workbuddy/
+dev-notes/
+
+# 一次性调查脚本与它们的输出（probe-* 全是这类）
+probe-*
+strings_*
+strings-*
+pri_scan.py
+runbuild.ps1
+build-log.txt
+*.txt.bak
+
+# 电源/诊断报告（本机产物，动辄几十 MB，且含机器信息）
+batteryreport.html
+sleepstudy.html
+sleepstudy-*.html
+
+# 通用
+*.log
+*.pdb
+*.user
+*.suo
+.vs/
+.idea/
+
+# 卫生扫描的真实名单（含账号/机器名/第三方信息），绝不提交
+tools/hygienescan/patterns.txt
+
+# 测量输出（含构建机路径）
+tools/footprint/*.txt
+
+# 诊断命令落盘的输出（unlock-probe / powercfg 等）
+unlock-probe.txt
+waketimers.txt
+powercfg-*.txt

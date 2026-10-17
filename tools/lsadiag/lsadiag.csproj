@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+      必须是 -windows：这个工具直接编译仓库里**真正在跑的那份** LogonProbe.cs，
+      而它连着 AccountIdentity.cs（NTAccount / Registry，都是 Windows-only）。
+      目标写成 net10.0 时这些调用会报 CA1416（"'NTAccount' 仅在 'windows' 上受支持"），
+      而且一旦漏链接 AccountIdentity.cs 就是 CS0103 一堆 —— 2026-10-15 就是这样把它弄坏了：
+      LogonProbe 新增了对 AccountIdentity 的调用，而这里没跟着加 Compile Include。
+      教训（同 docs/技术说明.md 第 8 节）：**改了被工具链接的源文件，就要把工具也构建一遍。**
+    -->
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>lsadiag</AssemblyName>
+    <RootNamespace>Btwu.LsaDiag</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- 直接编译项目里真正在用的那两份源码，所以这里测到的就是发出去的行为。
+       故意不用 ProjectReference：Btwu.Core 会拖进 WinRT 那一大坨，本工具一样都用不到。 -->
+  <ItemGroup>
+    <Compile Include="..\..\src\Btwu.Core\LogonProbe.cs" Link="LogonProbe.cs" />
+    <Compile Include="..\..\src\Btwu.Core\AccountIdentity.cs" Link="AccountIdentity.cs" />
+  </ItemGroup>
+
+</Project>

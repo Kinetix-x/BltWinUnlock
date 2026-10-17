@@ -1,0 +1,31 @@
+﻿<Project>
+
+  <!--
+    把构建机的绝对路径重写成一个中性前缀。
+
+    为什么需要它：即便发布时已经 `-p:DebugType=none -p:DebugSymbols=false`（pdb 文件确实没进包），
+    **dll 里仍然留着一条 RSDS 调试目录记录**，指向构建时那个 pdb 的完整路径。实测：
+
+        published Btwu.Core.dll  里带着  <你的仓库>\src\Btwu.Core\obj\...\Btwu.Core.pdb
+
+    这个包是要发给别人的，路径里既有项目目录名、也可能有人名（换个构建机就是 C:\Users\<真名>\...），
+    所以统一重写成 /btwu/。PathMap 是编译器选项（`-pathmap`），对所有托管项目生效，
+    比逐个项目加、或者在每个打包脚本里传一长串参数更不容易漏。
+
+    教训与 README §8.6 第 10 条同一类：**判据要落在承载那件事的那个文件上**——
+    这里就是「把发布的 dll 当二进制扫一遍，看里面有没有构建机的痕迹」。
+  -->
+  <PropertyGroup>
+    <PathMap>$(MSBuildThisFileDirectory)=/btwu/</PathMap>
+
+    <!--
+      版本号只有一个来源，就是这里。装配信息（FileVersion / InformationalVersion）与绿色包的
+      目录名/zip 名/使用说明里的版本都跟着它走——`scripts\package.ps1 -Version` 默认值要手动保持一致。
+
+      以前没有这一条，于是 dll 里一律写着默认的 1.0.0，而发行包叫 Btwu-1.1-win-x64：同一个包里
+      两处版本号对不上，出问题时第一个要问的「你装的是哪一版」就答不出来。
+    -->
+    <Version>1.3.3</Version>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,5 @@
+LIBRARY BtwuCredProv
+
+EXPORTS
+    DllCanUnloadNow     PRIVATE
+    DllGetClassObject   PRIVATE

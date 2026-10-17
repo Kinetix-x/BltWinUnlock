@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Btwu.Core", "src\Btwu.Core\Btwu.Core.csproj", "{3F1B7A64-9C2E-4D18-8E51-6A0D4C7B2F93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Btwu.Agent", "src\Btwu.Agent\Btwu.Agent.csproj", "{5D2E8C41-7B36-49AF-A1C4-8E7D3F0B6A52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Btwu.CredProv", "Btwu.CredProv", "{9C6F4B21-8E57-4A3D-B0F2-3D5A7E1C8064}"
+	ProjectSection(SolutionItems) = preProject
+		src\Btwu.CredProv\BtwuCredProv.cpp = src\Btwu.CredProv\BtwuCredProv.cpp
+		src\Btwu.CredProv\BtwuCredProv.def = src\Btwu.CredProv\BtwuCredProv.def
+		src\Btwu.CredProv\PresenceState.h = src\Btwu.CredProv\PresenceState.h
+		src\Btwu.CredProv\test\harness.cpp = src\Btwu.CredProv\test\harness.cpp
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F1B7A64-9C2E-4D18-8E51-6A0D4C7B2F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F1B7A64-9C2E-4D18-8E51-6A0D4C7B2F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F1B7A64-9C2E-4D18-8E51-6A0D4C7B2F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F1B7A64-9C2E-4D18-8E51-6A0D4C7B2F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2E8C41-7B36-49AF-A1C4-8E7D3F0B6A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2E8C41-7B36-49AF-A1C4-8E7D3F0B6A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2E8C41-7B36-49AF-A1C4-8E7D3F0B6A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2E8C41-7B36-49AF-A1C4-8E7D3F0B6A52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

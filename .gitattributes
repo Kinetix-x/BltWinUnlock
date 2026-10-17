@@ -1,0 +1,25 @@
+# 行尾统一：仓库里同时有 .cmd/.ps1/.cs（Windows 工具链）与 .py/.md，
+# 不做统一的话，换一台机器 clone 下来会看到「整个文件都改了」的假 diff。
+* text=auto
+
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+*.cs   text eol=crlf
+*.csproj text eol=crlf
+*.sln  text eol=crlf
+*.props text eol=crlf
+*.manifest text eol=crlf
+
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+
+*.png  binary
+*.jpg  binary
+*.dll  binary
+*.exe  binary
+
+# 许可证全文必须逐字节保持不变（FSF 发布的是 LF 换行）；"changing it is not allowed"
+LICENSE text eol=lf

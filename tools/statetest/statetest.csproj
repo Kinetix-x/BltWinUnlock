@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>statetest</AssemblyName>
+    <RootNamespace>Btwu.StateTest</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- 直接编译项目里真正在用的那两个源文件，所以这里测到的就是发出去的行为。
+       故意不用 ProjectReference：Btwu.Core 会拖进 WinRT 那一大坨，本工具一样都用不到。 -->
+  <ItemGroup>
+    <Compile Include="..\..\src\Btwu.Core\PresenceChannel.cs" Link="PresenceChannel.cs" />
+    <Compile Include="..\..\src\Btwu.Core\Paths.cs" Link="Paths.cs" />
+  </ItemGroup>
+
+</Project>
