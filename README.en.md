@@ -4,9 +4,6 @@
 
 English | [简体中文](README.md)
 
-> Walk away with your Bluetooth keyboard, come back, press Enter on the lock screen — you're in.
-> No password typing, no fingerprint reader, no phone app.
-
 The repository is `BltWinUnlock`; the program and its command are **`btwu`** (Bluetooth Unlock).
 
 ![Main panel](docs/screenshots/主面板.png)
@@ -15,8 +12,7 @@ The repository is `BltWinUnlock`; the program and its command are **`btwu`** (Bl
 
 ## What it does
 
-- Any Bluetooth device you have already **paired in Windows** becomes the key: a keyboard, a mouse,
-  or anything you tick in the panel;
+- Any Bluetooth device you have already **paired in Windows** becomes the key
 - Device connected → the lock screen gains a **default credential tile**; **press Enter to unlock**;
 - Device disconnected → the tile is gone, the lock screen looks exactly like stock Windows, and
   pressing Enter does nothing special;
@@ -25,8 +21,6 @@ The repository is `BltWinUnlock`; the program and its command are **`btwu`** (Bl
 ## What it does not do
 
 - **No auto-logon**: after a cold boot, sign-out or user switch you still type your password once;
-- **It never answers a UAC prompt** (`CPUS_CREDUI` is refused outright — otherwise the stored password
-  could silently approve elevation);
 - No network access, no telemetry, no data leaves the machine.
 
 ## Why a credential provider
@@ -42,7 +36,7 @@ Details: **[docs/技术说明.md](docs/技术说明.md)** (Chinese; the code and
 | | |
 | --- | --- |
 | OS | Windows 10 / 11, x64 (`win-arm64` can be built from source) |
-| Privileges | **One administrator elevation to install** (the provider goes into `System32` and is registered under `HKLM`; a scheduled task is created) |
+| Privileges | **One administrator elevation to install** |
 | .NET | Nothing to install with the self-contained package; the `-fd` package needs the .NET 10 Desktop Runtime |
 | Hardware | Any paired Bluetooth keyboard or mouse. No fingerprint reader, no camera, no phone app |
 
@@ -50,9 +44,9 @@ Details: **[docs/技术说明.md](docs/技术说明.md)** (Chinese; the code and
 
 1. Grab a package from [Releases](../../releases): `BtwuByKinetix_vX.Y.Z.zip` (self-contained, recommended)
    or `...-fd.zip` (framework-dependent);
-2. **Extract the whole folder** — do not pick out the exe; `BtwuCredProv.dll` next to it is required;
+2. **Extract the whole folder** ;
 3. Double-click **`启动管理面板.cmd`** (start the management panel);
-4. Click **Install** in the top section of the panel. **On first run it first asks you to tick your
+4. Click **安装** in the top section of the panel. **On first run it first asks you to tick your
    trigger devices, then to enter your Windows account password, and only then installs** — one UAC
    prompt for all three steps;
 5. Press `Win+L`, then press Enter on the lock screen: you are back on the desktop.
@@ -142,33 +136,9 @@ tools/                  standalone diagnostics (never shipped): LSA diag, state 
 docs/                   technical notes (Chinese) and screenshots
 ```
 
-## Verification
-
-This project has a low tolerance for "it should work", so several claims are executable:
-
-| Tool | What it proves |
-| --- | --- |
-| `src/Btwu.CredProv/test/build/harness.exe` | Drives the provider without registering it; **59 assertions** on serialization format, scenario policy and every fail-closed path |
-| `tools/statetest` (`--naive`) | Concurrency test for presence publishing; `--naive` runs the old implementation and is *required to fail* |
-| `btwu --gui-selftest` | GUI self-test at two window sizes (4 checks each) plus one check that the old, broken wiring still fails |
-| `btwu unlock-probe` | The only probe that goes through the **same path as the lock screen** (admin required) |
-| `tools/hygienescan` | Pre-release scan, per file, UTF-8 and UTF-16LE |
-
 ## Known limitations
 
 - Only **local accounts** and **Microsoft accounts** are covered; Entra ID (Azure AD) joined machines are untested;
-- Full end-to-end testing was done on Windows 11 Home (25H2) at 200% scaling; feedback for other
-  versions and DPI settings is welcome;
+- Full end-to-end testing was done on Windows 11 (25H2) at 200% scaling; 
 - "Presence" is **whether the Bluetooth link is up** — there is no distance information (RSSI is not read),
   so it cannot tell how far away you are.
-
-## License
-
-**[GPL-3.0](LICENSE)** (GNU General Public License v3.0). Copyright (C) 2026 Kinetix.
-
-You may use, modify and redistribute it freely; **if you distribute a modified version, including as a
-binary, GPL-3.0 requires you to make the corresponding source available under the same license** — this
-project cannot be turned into closed-source commercial software.
-
-The software is provided "as is", without warranty of any kind. Read the security model above: it stores
-a credential that can replace your password.
